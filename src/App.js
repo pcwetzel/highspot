@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import CardList from './js/components/cardList/cardList'
+import CardList from './js/components/cardList';
+import Filters from './js/components/filters';
 
 const data = {
   "cards": [
@@ -428,6 +429,7 @@ const data = {
 
 function App() {
   return (<>
+    <Filters />
     <CardList {...data} />
   </>);
 }
