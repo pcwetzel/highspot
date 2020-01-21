@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../card';
 import './cardList.scss';
+import PropTypes from 'prop-types';
 
 
 const CardList = (props) => {
@@ -18,6 +19,10 @@ const CardList = (props) => {
       </ul> }
     </section>
   );
+};
+
+CardList.propTypes = {
+  cards: PropTypes.array
 };
 
 export default CardList;
