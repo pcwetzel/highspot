@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Card = (props) => {
   const { imageUrl, name, text, set, type } = props;
-  console.log(props);
+
   return (
     <section className="card">
       <div className='card-front'>
@@ -24,7 +24,7 @@ Card.propTypes = {
   name: PropTypes.string.isRequired,
   imageUrl: PropTypes.string,
   text: PropTypes.string,
-  set: PropTypes.string,
+  set: PropTypes.object,
   type: PropTypes.string
 };
 

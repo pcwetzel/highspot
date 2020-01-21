@@ -10,7 +10,7 @@ export const useFetch = url => {
       .then(response => response.text())
       .then(responseText => {
         setDataState({
-          data: responseText,
+          data: JSON.parse(responseText),
           loading: false
         });
       });

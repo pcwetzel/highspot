@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 const CardList = (props) => {
   const { cards } = props;
+
   return (
     <section className='card-list'>
       <h2 className='screen-reader-only'>Card List</h2>
