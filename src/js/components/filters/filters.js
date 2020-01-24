@@ -1,8 +1,8 @@
 import React from 'react';
 import './filters.scss';
+import PropTypes from "prop-types";
 
-const alphaSort = (a, b) => {
-  console.log(`(a: ${a?.name?.toLowerCase()} > b: ${b?.name?.toLowerCase()} = ${(a?.name?.toLowerCase() > b?.name?.toLowerCase())}`);
+const setSort = (a, b) => {
   if (a?.name?.toLowerCase() < b?.name?.toLowerCase()) {
     return -1;
   }
@@ -12,67 +12,81 @@ const alphaSort = (a, b) => {
   return 0;
 };
 
-const createSelectOptions = (data = [], isSetsOption = false) => {
-  if (!data.length) {
-    return (<option value=''>No values found</option>);
-  }
-  console.group('%ccreateSelectOptions', 'background-color: green; color: yellow');
-  console.log(data);
-  data.sort(alphaSort);
-  console.log(data);
-  console.groupEnd();
-  return data.map(opt => {
-    const val = isSetsOption ? opt.id : opt.name;
-    return (<option key={ val } value={ val }>{ opt.name }</option>);
+
+
+const populateSimpleFilters = (simpleFilters = {}) => {
+  return Object.keys(simpleFilters).map((filter, index) => {
+    const filterObj = simpleFilters[filter];
+    if (!filterObj?.loading && !filterObj?.data?.[filter]) {
+      return null;
+    }
+    if (filterObj?.data?.[filter]) {
+      filterObj.data[filter].sort();
+    }
+    return (<div key={`${filter}-${index}`}>
+        <label htmlFor={`${filter}-input`}>
+          { filter.replace(/^([a-z])(.+)s?$/i, (m, p1, p2) => `${p1.toUpperCase()}${p2}` ) }:
+        </label>
+        { filterObj?.loading ? <div>loading...</div> : <select id={`${filter}-input`} name={ filter }>
+          { filterObj?.data?.[filter]?.map((opt, i) => (<option key={`${filter}-${opt}-${i}`}>{ opt }</option>))}
+        </select> }
+      </div>
+    );
   });
 };
 
+const populateSetsFilter = (sets = {}) => {
+  if (!sets?.loading && !sets?.data?.sets) {
+    return null;
+  }
+  if (sets?.data?.sets) {
+    sets.data.sets.sort(setSort);
+  }
+  return (<div>
+      <label htmlFor='set-input'>Sets:</label>
+        { sets?.loading ? <div>loading...</div> : <select id='set-input' name='sets.id'>
+          { sets?.data?.sets?.map(opt => (<option key={`set-${opt.id}`}>{ opt.name }</option>))}
+      </select> }
+    </div>
+  );
+};
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+};
 
 const Filters = (props) => {
-  const { sets, attribtues, keywords, types, subtypes } = props;
-
+  const { sets, ...otherFilters } = props;
   return (
     <section className='filter-container'>
-      <h2 className='screen-reader-only'>Filters</h2>
-      <form>
-        <label>
-          Name:
-          <input type='text' name='name' />
-        </label>
-        <label>
-          Rarity:
-        </label>
-        <label>
-          Sets:
-          { sets?.loading ? <div>loading...</div> : <select name="set.id">
-            { createSelectOptions(sets?.data?.sets, true) }
-            </select>
-          }
-        </label>
-        <label>
-          attribtues:
-          { sets?.loading ? <div>loading...</div> : <select name="set.id">
-            { createSelectOptions(sets?.data?.sets, true) }
-          </select>
-          }
-        </label>
-        <label>
-          Sets:
-          { sets?.loading ? <div>loading...</div> : <select name="set.id">
-            { createSelectOptions(sets?.data?.sets, true) }
-          </select>
-          }
-        </label>
-        <label>
-          Sets:
-          { sets?.loading ? <div>loading...</div> : <select name="set.id">
-            { createSelectOptions(sets?.data?.sets, true) }
-          </select>
-          }
-        </label>
+      <h2>Filters Cards By</h2>
+      <form onSubmit={ handleSubmit }>
+        <div>
+          <label htmlFor='name-input'>
+            Name:
+          </label>
+          <input type='text' name='name' id='name-input' />
+        </div>
+        <div>
+          <label htmlFor='rarity-input'>
+            Rarity:
+          </label>
+          <input type='text' name='rarity' id='rarity-input' />
+        </div>
+        { populateSetsFilter(sets) }
+        { populateSimpleFilters(otherFilters) }
+        <div>
+          <input type='submit' value='Filter' />
+        </div>
       </form>
     </section>
   );
+};
+
+
+Filters.propTypes = {
+  sets: PropTypes.object,
+  otherFilters: PropTypes.object
 };
 
 export default Filters;
