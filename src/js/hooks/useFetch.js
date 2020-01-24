@@ -19,8 +19,8 @@ export const useFetch = url => {
   useEffect(() => {
     setDataState(state => ({ data: state.data, loading: true, error: false }));
 
-    console.log('dataState 1');
-    console.log(dataState);
+    // console.log('dataState 1');
+    // console.log(dataState);
     fetch(url, requestHeaders)
       .then(response => {
         if (!response || response?.status !== 200) {
@@ -35,15 +35,15 @@ export const useFetch = url => {
         } catch(e) {
           return Promise.reject('Unable to transform response into json');
         }
-        console.log('dataState 2');
-        console.log(dataState);
+        // console.log('dataState 2');
+        // console.log(dataState);
         setDataState({
           data,
           loading: false,
           error: false
         });
-        console.log('dataState 3');
-        console.log(dataState);
+        // console.log('dataState 3');
+        // console.log(dataState);
       })
       .catch(reason => {
         console.error('API Fetch Error: ', reason);
