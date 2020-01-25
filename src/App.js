@@ -18,9 +18,7 @@ function App() {
 
   const loadNextPage = () => {
     console.log('loading next page');
-    setCardDataLoading(true);
     setCurrentPage(cp => cp + 1);
-    setCardDataLoading(false);
   };
 
   useEffect(() => {
