@@ -1,5 +1,7 @@
 const URL = 'https://api.elderscrollslegends.io/v1';
 
+const MAX_PAGE_SIZE = 100;
+
 /* Endpoints for specific services */
 const CARDS = `${URL}/cards`;             // Get cards (filtering by parameters specified below)
 const SETS = `${URL}/sets`;               // Get all the possible set names (and other per set attributes)
@@ -34,6 +36,7 @@ const LOGICAL_OR = '|';
 
 
 export {
+  MAX_PAGE_SIZE,
   CARDS,
   SETS,
   ATTRIBUTES,
