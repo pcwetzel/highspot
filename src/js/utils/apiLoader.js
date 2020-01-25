@@ -62,7 +62,8 @@ const fetchCards = async (extraParameters = null) => {
     cards: cardData?.cards,
     loading: cardData?.loading,
     error: cardData?.error,
-    hasMoreCards: hasMoreCards
+    hasMoreCards,
+    totalCards
   };
 };
 

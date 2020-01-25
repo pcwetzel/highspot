@@ -5,6 +5,7 @@ import ScrollLoader from './js/components/scrollLoader';
 // import Filters from './js/components/filters';
 // import {useFetch} from "./js/hooks/useFetch";
 import { fetchCards } from "./js/utils/apiLoader";
+import * as API from './js/constants/endpoint-constants';
 
 
 
@@ -15,23 +16,29 @@ function App() {
   const [cardError, setCardError] = useState(null);
   const [hasMoreCards, setHasMoreCards] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalCards, setTotalCards] = useState(0);
+  const [cardApiParams, setCardApiParams] = useState(() => {
+    return { [API.PARAM_PAGE] : currentPage };
+  });
 
   const loadNextPage = () => {
     console.log('loading next page');
     setCurrentPage(cp => cp + 1);
+    setCardApiParams(apiParam => setCardApiParams(Object.assign({}, apiParam, { [API.PARAM_PAGE] : currentPage })));
   };
 
   useEffect(() => {
     setCardDataLoading(true);
-    const cardPromise = fetchCards({ page: currentPage });
+    const cardPromise = fetchCards(cardApiParams);
     cardPromise.then( cardResponse => {
       console.log('baaack', cardResponse);
       setCardDataLoading(false);
       setCardError(cardResponse?.error);
       setCardData((c) => [...c, ...cardResponse?.cards]);
       setHasMoreCards(cardResponse?.hasMoreCards);
+      setTotalCards(cardResponse?.totalCards);
     });
-  }, [currentPage]);
+  }, [cardApiParams]);
 
 
 
@@ -69,6 +76,7 @@ function App() {
 
   return (<>
       <button onClick={() => setHasMoreCards(!hasMoreCards) }>Toggle HasMoreCards</button>
+      { totalCards && <div>{ totalCards.toLocaleString() } cards found</div> }
       { cardError && <div><h3>Loading Cards Error</h3><div>Reason: {cardError}</div></div> }
       { cardData && <CardList cards={cardData} /> }
       { cardDataLoading && <div className="loading-indicator">Loading ...</div> }
