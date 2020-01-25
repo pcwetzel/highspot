@@ -14,7 +14,7 @@ function App() {
   const [cardDataLoading, setCardDataLoading] = useState(false);
   const [cardError, setCardError] = useState(null);
   const [hasMoreCards, setHasMoreCards] = useState(false);
-  const [currentPage, setCurrentPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const loadNextPage = () => {
     console.log('loading next page');
@@ -73,6 +73,7 @@ function App() {
       <button onClick={() => setHasMoreCards(!hasMoreCards) }>Toggle HasMoreCards</button>
       { cardError && <div><h3>Loading Cards Error</h3><div>Reason: {cardError}</div></div> }
       { cardData && <CardList cards={cardData} /> }
+      { cardDataLoading && <div className="loading-indicator">Loading ...</div> }
       { hasMoreCards && <ScrollLoader cardDataLoading={cardDataLoading} loadNextPage={loadNextPage} /> }
     </>
   );

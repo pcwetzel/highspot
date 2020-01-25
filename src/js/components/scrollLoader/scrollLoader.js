@@ -27,8 +27,7 @@ const ScrollLoader = (props) => {
   });
 
   return (<section ref={scrollElement}>
-    { cardDataLoading ? <div className="loading-indicator">Loading ...</div>
-      : <div className='scroll-indicator'>Scroll Down for more cards</div> }
+    { !cardDataLoading && <div className='scroll-indicator'>Scroll Down for more cards</div> }
   </section>);
 };
 
