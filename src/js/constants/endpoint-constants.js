@@ -3,12 +3,12 @@ const URL = 'https://api.elderscrollslegends.io/v1';
 const MAX_PAGE_SIZE = 20;
 
 /* Endpoints for specific services */
-const CARDS = `${URL}/cards`;             // Get cards (filtering by parameters specified below)
-const SETS = `${URL}/sets`;               // Get all the possible set names (and other per set attributes)
-const ATTRIBUTES = `${URL}/attributes`;   // Get all the possible card attribute values
-const KEYWORDS = `${URL}/keywords`;       // Get all the possible card keyword values
-const TYPES = `${URL}/types`;             // Get all the possible card types
-const SUBTYPES = `${URL}/subtypes`;       // Get all the possible card subtypes
+const CARDS = `${URL}/cards`;                    // Get cards (filtering by parameters specified below)
+const FILTER_ATTRIBUTES = `${URL}/attributes`;   // Get all the possible card attribute values
+const FILTER_KEYWORDS = `${URL}/keywords`;       // Get all the possible card keyword values
+const FILTER_SETS = `${URL}/sets`;               // Get all the possible set names (and other per set attributes)
+const FILTER_SUBTYPES = `${URL}/subtypes`;       // Get all the possible card subtypes
+const FILTER_TYPES = `${URL}/types`;             // Get all the possible card types
 
 /* Get cards filtering parameters */
 const PARAM_PAGE_SIZE = 'pageSize';
@@ -38,11 +38,11 @@ const LOGICAL_OR = '|';
 export {
   MAX_PAGE_SIZE,
   CARDS,
-  SETS,
-  ATTRIBUTES,
-  KEYWORDS,
-  TYPES,
-  SUBTYPES,
+  FILTER_SETS,
+  FILTER_ATTRIBUTES,
+  FILTER_KEYWORDS,
+  FILTER_TYPES,
+  FILTER_SUBTYPES,
   PARAM_PAGE_SIZE,
   PARAM_PAGE,
   PARAM_NAME,

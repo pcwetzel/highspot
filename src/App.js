@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import Header from './js/components/header';
+import Filters from './js/components/filters';
 import CardList from './js/components/cardList';
 import ScrollLoader from './js/components/scrollLoader';
-// import Filters from './js/components/filters';
-// import {useFetch} from "./js/hooks/useFetch";
 import { fetchCards } from "./js/utils/apiLoader";
 import * as API from './js/constants/endpoint-constants';
 
+import './App.css';
 
 
 function App() {
@@ -25,6 +25,14 @@ function App() {
     console.log('loading next page');
     setCurrentPage(cp => cp + 1);
     setCardApiParams(apiParam => setCardApiParams(Object.assign({}, apiParam, { [API.PARAM_PAGE] : currentPage })));
+  };
+
+  const handleFilterSubmit = (builtForm = {}) => {
+    console.group('%chandleFilterSubmit', 'background-color: red; color: white; font-weight: bold;');
+    console.log(builtForm);
+    console.groupEnd();
+    setCardData([]);
+    setCardApiParams(Object.assign({}, cardApiParams, builtForm, { [API.PARAM_PAGE] : 1 }));
   };
 
   useEffect(() => {
@@ -75,12 +83,17 @@ function App() {
 
 
   return (<>
-      <button onClick={() => setHasMoreCards(!hasMoreCards) }>Toggle HasMoreCards</button>
-      { totalCards && <div>{ totalCards.toLocaleString() } cards found</div> }
-      { cardError && <div><h3>Loading Cards Error</h3><div>Reason: {cardError}</div></div> }
-      { cardData && <CardList cards={cardData} /> }
-      { cardDataLoading && <div className="loading-indicator">Loading ...</div> }
-      { hasMoreCards && <ScrollLoader cardDataLoading={cardDataLoading} loadNextPage={loadNextPage} /> }
+      <header>
+        <Header />
+      </header>
+      <main>
+        { !cardError && <aside><Filters filterSubmit={ handleFilterSubmit }/> </aside> }
+        { !cardError && <section className='card-total'>{ totalCards.toLocaleString() } cards found</section> }
+        { cardError && <section className='loading-error'><h3>Loading Cards Error</h3><div>Reason: {cardError}</div></section> }
+        { cardData && <CardList cards={cardData} /> }
+        { cardDataLoading && <div className="loading-indicator">Loading ...</div> }
+        { hasMoreCards && <ScrollLoader cardDataLoading={cardDataLoading} loadNextPage={loadNextPage} /> }
+      </main>
     </>
   );
 }

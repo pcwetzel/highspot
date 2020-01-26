@@ -42,6 +42,16 @@ const buildQueryString = (params = null) => {
   return '';
 };
 
+const fetchFilters = async () => {
+  return await Promise.all([
+    fetchUrl(API.FILTER_ATTRIBUTES),
+    fetchUrl(API.FILTER_KEYWORDS),
+    fetchUrl(API.FILTER_SETS),
+    fetchUrl(API.FILTER_TYPES),
+    fetchUrl(API.FILTER_SUBTYPES)
+  ]);
+};
+
 const fetchCards = async (extraParameters = null) => {
   const params = Object.assign({}, extraParameters, { [API.PARAM_PAGE_SIZE]: API.MAX_PAGE_SIZE });
   const requestedPage = params?.[API.PARAM_PAGE] || 1;
@@ -49,8 +59,9 @@ const fetchCards = async (extraParameters = null) => {
   console.log(params);
   let cardData = await fetchUrl(`${API.CARDS}${ buildQueryString(params)}`, 'cards');
   console.log('cardData***************', cardData);
-  const totalCards = cardData?.totalCount;
-  const hasMoreCards = (requestedPage * API.MAX_PAGE_SIZE) < totalCards;
+  const totalCards = cardData?.error ? 0 : cardData?.totalCount;
+  const hasMoreCards = cardData?.error ? false : (requestedPage * API.MAX_PAGE_SIZE) < totalCards;
+  const cards = cardData?.error ? [] : cardData?.cards;
 
   console.log('(requestedPage * API.MAX_PAGE_SIZE) < totalCards');
   console.log(`(${requestedPage} * ${API.MAX_PAGE_SIZE}) < ${totalCards}: ${(requestedPage * API.MAX_PAGE_SIZE) < totalCards}`);
@@ -59,14 +70,15 @@ const fetchCards = async (extraParameters = null) => {
   console.log(cardData);
   console.groupEnd();
   return {
-    cards: cardData?.cards,
     loading: cardData?.loading,
     error: cardData?.error,
+    cards,
     hasMoreCards,
     totalCards
   };
 };
 
 export {
-  fetchCards
+  fetchCards,
+  fetchFilters
 };
