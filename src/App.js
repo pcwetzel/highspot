@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Header from './js/components/header';
-import Filters from './js/components/filters';
 import CardList from './js/components/cardList';
 import ScrollLoader from './js/components/scrollLoader';
 import { fetchCards } from "./js/utils/apiLoader";
@@ -53,44 +52,15 @@ function App() {
     });
   }, [cardApiParams]);
 
-
-
-
-  /*
-    useEffect(() => {
-      console.log(`loading ${loading}`);
-      setLoading(true);
-      console.log(`loading ${loading}`);
-
-      const cardPromise = fetchCards(`${API.CARDS}?${PARAM_PAGE_SIZE}=${INITIAL_PAGE_SIZE}`);
-      cardPromise.then( cardResponse => {
-        console.log('cardResponse');
-        console.log(cardResponse);
-        setIsCardsLoading(cardResponse?.loading);
-        setCardData(cardResponse?.data);
-        console.log('cardData', cardData);
-        console.log('cardsLoading', cardsLoading);
-      });
-    }, []);
-
-  */
-/*
-
-  const cardData = useFetch(`${API.CARDS}?${API.PARAM_PAGE_SIZE}=${INITIAL_PAGE_SIZE}`);
-  const possibleFilterValues = {
-    sets: useFetch(API.SETS),               // Get all the possible set names (and other per set attributes)
-    attributes: useFetch(API.ATTRIBUTES),   // Get all the possible card attribute values
-    keywords: useFetch(API.KEYWORDS),       // Get all the possible card keyword values
-    types: useFetch(API.TYPES),             // Get all the possible card types
-    subtypes: useFetch(API.SUBTYPES)       // Get all the possible card subtypes
-  };
-*/
-
+  const paintFilters = !cardError;
+  const showTotalCards = !cardError && !cardDataLoading;
 
   return (<>
-      <Header totalCards={ totalCards } showTotalCards={ !cardError && !cardDataLoading }/>
+      <Header totalCards={ totalCards }
+              showTotalCards={ showTotalCards }
+              paintFilters={ paintFilters }
+              handleFilterSubmit={ handleFilterSubmit } />
       <main>
-        { !cardError && <Filters filterSubmit={ handleFilterSubmit }/> }
         { cardError && <section className='loading-error'><h3>Loading Cards Error</h3><div>Reason: {cardError}</div></section> }
         { cardData && <CardList cards={cardData} /> }
         { cardDataLoading && <div className="loading-indicator">Loading ...</div> }

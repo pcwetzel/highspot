@@ -16,6 +16,9 @@ const Card = (props) => {
           { type && <><dt>Type:</dt><dd>{ type }</dd></> }
         </dl>
       </div>
+      <button className='cta'>
+        <div>More Details</div>
+      </button>
     </section>
   );
 };

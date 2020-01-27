@@ -41,7 +41,10 @@ const nonLookupInputs = [
     label: 'Rules',
     name: 'text',
     type: 'text'
-  },
+  }
+];
+
+const nonLookupCheckboxes = [
   {
     label: 'Unique Card',
     name: 'unique',
@@ -52,7 +55,7 @@ const nonLookupInputs = [
 
 const Filters = (props) => {
 
-  const { filterSubmit } = props;
+  const { filterSubmit, filterVisibilityToggle } = props;
 
   const formRef = useRef(null);
 
@@ -168,11 +171,12 @@ const Filters = (props) => {
     }
   };
 
-  const createNonLookupInputs = () => {
-    return nonLookupInputs.map(input => {
+  const createNonLookupElements = (elements = [], postFix = '') => {
+    return elements.map(input => {
       const domId = `filter-${input.name}`;
+      const text = input.label ? input.label : input.name.replace(capitalizeNoPlural.regex, capitalizeNoPlural.replaceFunc);
       const label = (<label htmlFor={domId} key={`${domId}-label`}>
-        { input.label ? input.label : input.name.replace(capitalizeNoPlural.regex, capitalizeNoPlural.replaceFunc)}
+        { text }{ postFix }
       </label>);
       const field = (<div key={`${domId}-field`}>
         <input type={input.type} name={input.name} id={domId} onChange={ handleOnChange } />
@@ -227,19 +231,20 @@ const Filters = (props) => {
     filterSubmit(builtForm);
   };
 
-  return (<aside className='filter-container'>
+  return (<aside className={`filter-container ${filterVisibilityToggle}` }>
       <section>
         <h2>Filters Cards</h2>
         <form onSubmit={ submitHandler } ref={ formRef }>
-          { createNonLookupInputs() }
+          { createNonLookupElements(nonLookupInputs, ':') }
           { createLookupInputs('attributes', attributeList) }
           { createLookupInputs('keywords', keywordsList) }
           { createLookupInputs('sets', setsList) }
           { createLookupInputs('types', typesList) }
           { createLookupInputs('subTypes', subTypesList) }
+          { createNonLookupElements(nonLookupCheckboxes) }
 
           <div>
-            <input type='submit' value='Filter' />
+            <button className='cta'><div>Filter</div></button>
           </div>
         </form>
         <fieldset>
@@ -256,7 +261,8 @@ const Filters = (props) => {
 };
 
 Filters.propTypes = {
-  filterSubmit: PropTypes.func.isRequired
+  filterSubmit: PropTypes.func.isRequired,
+  filterVisibilityToggle: PropTypes.string.isRequired
 };
 
 export default Filters;
