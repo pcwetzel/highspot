@@ -122,8 +122,7 @@ const Filters = (props) => {
       console.log('end of filters');
       console.groupEnd();
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const setSort = (a, b) => {
     if (a?.name?.toLowerCase() < b?.name?.toLowerCase()) {
@@ -211,7 +210,7 @@ const Filters = (props) => {
       setBuiltForm(Object.assign({}, builtForm, { [inputName] : value }));
     } else {
       // Disabling linter due to needing a throwaway variable to remov
-      const { [inputName]: throwAwayVar, ...removeValueForm} = builtForm;    // eslint-disable no-unused-vars
+      const { [inputName]: throwAwayVar, ...removeValueForm} = builtForm;    // eslint-disable-line no-unused-vars
       console.log(`********** removeValueForm`, JSON.parse(JSON.stringify(removeValueForm)));
       setBuiltForm(removeValueForm);
     }

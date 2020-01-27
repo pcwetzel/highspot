@@ -22,11 +22,14 @@
     },
     "plugins": [
         "react",
-        "jest"
+        "jest",
+        "react-hooks"
     ],
     "rules": {
         "strict": 0,
-        "semi": "error"
+        "semi": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     },
     "settings": {
         "react": {
