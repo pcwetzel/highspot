@@ -9,7 +9,7 @@ const CardList = (props) => {
 
   return (
     <section className='card-list'>
-      <h2 className='screen-reader-only'>Card List</h2>
+      <h2 className='screen-reader-only'>List of Cards</h2>
       { !cards && <div className='error no-cards'>No Cards Found</div> }
       { cards && <ul>
       { cards.map((card, index) => {

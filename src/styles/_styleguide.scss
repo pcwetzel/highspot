@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=EB+Garamond&display=swap');
 
 $primary-font: 'Roboto', sans-serif;
+$garamond-font: 'EB Garamond', serif;
+
+$white: #FFFFFF;
+$black: #000000;
+$gold-dark: #D9A73D;
+$gold-light: #C5AC59;
+$charcoal: #574F49;
 
 .screen-reader-only {
   border: 0;
@@ -14,14 +22,16 @@ $primary-font: 'Roboto', sans-serif;
   width: 1px
 }
 
-.skip-link {
-  left: -100%;
-  position: absolute;
-  z-index: 1000;
-  background-color: #fff;
-  color: #000
-}
-
-.skip-link:focus {
-  left: 50%
+button.cta, a.cta {
+  color: $white;
+  margin: 0;
+  font-size: 1em;
+  padding: 2px;
+  text-transform: uppercase;
+  border: 1px solid $gold-light;
+  border-top: 2px solid $gold-light;
+  border-bottom: 1px solid $charcoal;
+  background-color: rgba($black, .5);
+  box-shadow: 0 0 3px rgba($black, .6);
+  letter-spacing: .5em;
 }

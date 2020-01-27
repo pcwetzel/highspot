@@ -1,0 +1,9 @@
+main {
+  background: url(/graphics/table-background.jpg) no-repeat top;
+  background-repeat: repeat-x;
+  position: relative;
+}
+
+.filters {
+
+}

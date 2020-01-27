@@ -8,6 +8,14 @@ const capitalizeNoPlural = {
   replaceFunc: (m, p1, p2) => `${p1.toUpperCase()}${p2}`
 };
 
+// Some values that are received had different names when we try to filter.
+// Example: We get "types" via the Types API, but send "type"
+const lookupInputNames = {
+  sets: 'set.id',
+  subTypes: 'subtypes',
+  types: 'type'
+};
+
 const nonLookupInputs = [
   {
     name: 'name',
@@ -142,12 +150,12 @@ const Filters = (props) => {
       { filterName.replace(capitalizeNoPlural.regex, capitalizeNoPlural.replaceFunc) }:
     </label>);
 
-
+    const inputName = lookupInputNames?.[filterName] || filterName;
     if (filter?.length) {
       return (<div className='select-line'>
         { label }
         <div>
-          <select id={ `filter-${filterName}`} name={filterName} onChange={ handleOnChange }>
+          <select id={ `filter-${filterName}`} name={ inputName } onChange={ handleOnChange }>
             { createSelectOptions(filterName, filter) }
           </select>
         </div>
@@ -219,32 +227,31 @@ const Filters = (props) => {
     filterSubmit(builtForm);
   };
 
-  const disabledSubmitButton = !Object.entries(builtForm).length;
+  return (<aside className='filter-container'>
+      <section>
+        <h2>Filters Cards</h2>
+        <form onSubmit={ submitHandler } ref={ formRef }>
+          { createNonLookupInputs() }
+          { createLookupInputs('attributes', attributeList) }
+          { createLookupInputs('keywords', keywordsList) }
+          { createLookupInputs('sets', setsList) }
+          { createLookupInputs('types', typesList) }
+          { createLookupInputs('subTypes', subTypesList) }
 
-  return (
-    <section className='filter-container'>
-      <h2>Filters Cards By</h2>
-      <form onSubmit={ submitHandler } ref={ formRef }>
-        { createNonLookupInputs() }
-        { createLookupInputs('attributes', attributeList) }
-        { createLookupInputs('keywords', keywordsList) }
-        { createLookupInputs('sets', setsList) }
-        { createLookupInputs('types', typesList) }
-        { createLookupInputs('subTypes', subTypesList) }
-
-        <div>
-          <input type='submit' value='Filter' disabled={ disabledSubmitButton } />
-        </div>
-      </form>
-      <fieldset>
-        <legend>builtForm</legend>
-        { Object.keys(builtForm).map(k => {
-          return (<div key={`o-${k}`}>
-            <b>{k}:</b> {builtForm[k]}
-          </div>);
-        })}
-      </fieldset>
-    </section>
+          <div>
+            <input type='submit' value='Filter' />
+          </div>
+        </form>
+        <fieldset>
+          <legend>builtForm</legend>
+          { Object.keys(builtForm).map(k => {
+            return (<div key={`o-${k}`}>
+              <b>{k}:</b> {builtForm[k]}
+            </div>);
+          })}
+        </fieldset>
+      </section>
+    </aside>
   );
 };
 

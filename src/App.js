@@ -22,17 +22,22 @@ function App() {
   });
 
   const loadNextPage = () => {
-    console.log('loading next page');
-    setCurrentPage(cp => cp + 1);
-    setCardApiParams(apiParam => setCardApiParams(Object.assign({}, apiParam, { [API.PARAM_PAGE] : currentPage })));
+    console.log('loading next page - current page: ', currentPage);
+    const nextPage = currentPage + 1;
+    const newApiCall = Object.assign({}, cardApiParams, { [API.PARAM_PAGE] : nextPage });
+    setCardApiParams(newApiCall);
+    setCurrentPage(nextPage);
+    console.log(`currentPage: ${currentPage} - newApiCall: `, JSON.parse(JSON.stringify(newApiCall)));
   };
+
 
   const handleFilterSubmit = (builtForm = {}) => {
     console.group('%chandleFilterSubmit', 'background-color: red; color: white; font-weight: bold;');
     console.log(builtForm);
     console.groupEnd();
     setCardData([]);
-    setCardApiParams(Object.assign({}, cardApiParams, builtForm, { [API.PARAM_PAGE] : 1 }));
+    setCurrentPage(1);
+    setCardApiParams(Object.assign({}, builtForm, { [API.PARAM_PAGE] : 1 }));
   };
 
   useEffect(() => {
@@ -83,12 +88,9 @@ function App() {
 
 
   return (<>
-      <header>
-        <Header />
-      </header>
+      <Header totalCards={ totalCards } showTotalCards={ !cardError && !cardDataLoading }/>
       <main>
-        { !cardError && <aside><Filters filterSubmit={ handleFilterSubmit }/> </aside> }
-        { !cardError && <section className='card-total'>{ totalCards.toLocaleString() } cards found</section> }
+        { !cardError && <Filters filterSubmit={ handleFilterSubmit }/> }
         { cardError && <section className='loading-error'><h3>Loading Cards Error</h3><div>Reason: {cardError}</div></section> }
         { cardData && <CardList cards={cardData} /> }
         { cardDataLoading && <div className="loading-indicator">Loading ...</div> }
