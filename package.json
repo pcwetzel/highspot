@@ -45,5 +45,6 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "jest": "^24.9.0",
     "jest-dom": "^4.0.0"
-  }
+  },
+  "homepage": "."
 }
