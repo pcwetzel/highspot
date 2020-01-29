@@ -1,9 +1,21 @@
+/* ** HTML Resetting ** */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+/* ** Font Definitions ** */
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=EB+Garamond&display=swap');
 
 $primary-font: 'Roboto', sans-serif;
 $garamond-font: 'EB Garamond', serif;
 
+/* ** Standardized COlor Definitions ** */
 $white: #FFFFFF;
 $black: #000000;
 $gold-dark: #D9A73D;
@@ -13,9 +25,14 @@ $light-khaki: #B4A679B3;
 $dark-khaki: #242424;
 $high-contrast-offwhite: #F0F0F0;
 
-@mixin button-border-style {
+/* ** Media Breakpoints Definitions ** */
+$MEDIUM_BREAKPOINT: 600;
+$LARGE_BREAKPOINT: 850;
 
-}
+$media-query-medium: 'only screen and (min-width: #{$MEDIUM_BREAKPOINT}px)';
+$media-query-large: 'only screen and (min-width: #{$LARGE_BREAKPOINT}px)';
+
+/* ** Accessibility Definitions ** */
 
 .screen-reader-only {
   border: 0;
@@ -29,6 +46,7 @@ $high-contrast-offwhite: #F0F0F0;
   width: 1px
 }
 
+/* ** Standardized Styling of UI Components ** */
 button.cta, a.cta, .cta {
   color: $white;
   margin: 0.5rem auto;
@@ -66,7 +84,13 @@ h1,h2,h3 {
 }
 
 h1 {
-  font-size: 2.6rem;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media #{$media-query-medium} {
+    font-size: 2.6rem;
+  }
 }
 
 h2 {

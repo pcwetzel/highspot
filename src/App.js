@@ -60,7 +60,7 @@ function App() {
               showTotalCards={ showTotalCards }
               paintFilters={ paintFilters }
               handleFilterSubmit={ handleFilterSubmit } />
-      <main>
+      <main data-testid='main'>
         { cardError && <section className='loading-error'><h3>Loading Cards Error</h3><div>Reason: {cardError}</div></section> }
         { cardData && <CardList cards={cardData} /> }
         { cardDataLoading && <div className="loading-indicator">Loading ...</div> }
