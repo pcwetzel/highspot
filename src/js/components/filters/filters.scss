@@ -5,16 +5,13 @@
   background-color: rgba($dark-khaki, .9);
   padding: .2rem .7rem;
   transform: translateX(-100%);
-  display: none;
-
+  transition:
+      transform 0.5s ease-out,
+      visibility 0s 0.5s;
 
   &.active {
-    display: block;
-    animation: slide-in-from-left 0.5s forwards;
-  }
-
-  &.deactivate {
-    animation: slide-out-to-left 0.5s forwards;
+    visibility: visible;
+    transform: translateX(0%);
   }
 
   form {
@@ -26,7 +23,7 @@
     label {
       display: block;
       font-weight: bold;
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-family: $garamond-font;
     }
 
@@ -39,17 +36,17 @@
     }
 
     input {
-      font-size: 1.3rem;
+      font-size: 0.8rem;
       padding: .1rem;
     }
 
     input[type='checkbox'] {
-      height: 25px;
-      width: 25px;
+      height: 20px;
+      width: 20px;
     }
 
     select {
-      font-size: 1.1rem;
+      font-size: 0.7rem;
     }
 
     .checkbox-line {
@@ -60,23 +57,5 @@
       }
     }
 
-  }
-}
-
-@keyframes slide-in-from-left {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes slide-out-to-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
   }
 }

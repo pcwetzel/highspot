@@ -10,7 +10,7 @@ const Header = (props) => {
   const { totalCards, showTotalCards, paintFilters, handleFilterSubmit } = props;
 
 
-  const [filterVisibilityToggle, setFilterVisibilityToggle] = useState('');
+  const [filterVisibilityToggle, setFilterVisibilityToggle] = useState(false);
 
   const handleFilterButtonClick = (newFilterVisibility) => {
     setFilterVisibilityToggle(newFilterVisibility);
