@@ -4,6 +4,8 @@
   position: absolute;
   background-color: rgba($dark-khaki, .9);
   padding: .2rem .7rem;
+  max-height: calc(100vh - 5rem);
+  overflow: auto;
   transform: translateX(-100%);
   transition:
       transform 0.5s ease-out,

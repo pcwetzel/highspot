@@ -10,6 +10,7 @@ $white: #FFFFFF;
 $black: #000000;
 $gold-dark: #D9A73D;
 $gold-light: #C5AC59;
+$charcoal-light: #636B6F;
 $charcoal: #574F49;
 $light-khaki: #B4A679B3;
 $dark-khaki: #242424;
@@ -59,6 +60,7 @@ button.cta, a.cta, .cta {
 
   &:hover, &:focus {
     span, div {
+      transition: all .3s ease;
       background-color: $gold-dark;
       color: $black;
     }
