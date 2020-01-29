@@ -7,25 +7,25 @@ section.card-list {
     list-style-type: none;
     margin: 0 auto;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: stretch;
-    width: 80%;
+    width: 95%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: .2rem;
 
     li {
       display: block;
-      max-width: 400px;
-      margin: 0 0.5em 2em 0.5em;
-      background-color: rgba($black, 0.5);
-      box-shadow: 0 0 20px 1px rgba($black, 0.6);
-      border: 1px solid hsla(46, 28%, 59%, 0.7);
+      margin: 0 .5em 2em .5em;
+      background-color: rgba($black, .5);
+      box-shadow: 0 0 20px 1px rgba($black, .6);
+      border: 1px solid hsla(46, 28%, 59%, .7);
       border-radius: 15px;
+      /*
       transition: box-shadow .6s ease;
 
       @media only screen and (min-width: 600px) {
         min-width: 400px;
       }
+      */
     }
   }
 }
