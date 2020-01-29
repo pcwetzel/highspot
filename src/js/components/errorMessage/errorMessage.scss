@@ -1,0 +1,14 @@
+@import '../../../styles/styleguide';
+
+.error-message {
+  display: block;
+  border: 2px groove $gold-dark;
+  margin: 2rem auto;
+  padding: 0.7rem 1rem;
+  text-align: center;
+  width: max-content;
+
+  div {
+    margin: 0.5rem 0;
+  }
+}

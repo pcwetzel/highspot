@@ -1,9 +1,17 @@
 @import 'styles/_styleguide';
 
+/* ** HTML Resetting ** */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
 body {
   color: $white;
-  background: url('https://legends.bethesda.net/img/rock_bg.jpg') no-repeat top;
-  background-repeat: repeat-x;
   background-color: $black;
   padding: 0;
   margin: 0;

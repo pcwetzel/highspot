@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Header from './js/components/header';
 import CardList from './js/components/cardList';
+import ErrorMessage from './js/components/errorMessage';
 import ScrollLoader from './js/components/scrollLoader';
 import { fetchCards } from "./js/utils/apiLoader";
 import * as API from './js/constants/endpoint-constants';
 
-import './App.css';
+import './App.scss';
 
 
 function App() {
@@ -61,10 +62,10 @@ function App() {
               paintFilters={ paintFilters }
               handleFilterSubmit={ handleFilterSubmit } />
       <main data-testid='main'>
-        { cardError && <section className='loading-error'><h3>Loading Cards Error</h3><div>Reason: {cardError}</div></section> }
-        { cardData && <CardList cards={cardData} /> }
+        { cardError && <ErrorMessage message={ cardError } /> }
+        { cardData && <CardList cards={ cardData } /> }
         { cardDataLoading && <div className="loading-indicator">Loading ...</div> }
-        { hasMoreCards && <ScrollLoader cardDataLoading={cardDataLoading} loadNextPage={loadNextPage} /> }
+        { hasMoreCards && <ScrollLoader cardDataLoading={ cardDataLoading } loadNextPage={ loadNextPage } /> }
       </main>
     </>
   );

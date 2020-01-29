@@ -1,5 +1,14 @@
+@import 'styles/_styleguide';
+
 main {
   position: relative;
+  background: url('https://legends.bethesda.net/img/rock_bg.jpg') no-repeat top;
+  background-repeat: repeat-x;
+  padding-top: 20px;
+
+  @media #{$media-query-medium} {
+    padding-top: 62px;
+  }
 }
 
 
