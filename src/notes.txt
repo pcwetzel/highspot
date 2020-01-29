@@ -31,3 +31,21 @@ Power 1-12
 Health 1-12
 Soul Summon 50-1200
 Soul Trap 5-400 c
+
+
+
+
+------------------
+
+
+    transition:
+      transform 1.5s ease-out,
+      visibility 0s 1.5s;
+  }
+
+  .move-it {
+    background-color: red;
+    transform: translateX(-100%);
+    visibility: hidden;
+ }
+
