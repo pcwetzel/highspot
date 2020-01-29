@@ -21,19 +21,14 @@ function App() {
   });
 
   const loadNextPage = () => {
-    console.log('loading next page - current page: ', currentPage);
     const nextPage = currentPage + 1;
     const newApiCall = Object.assign({}, cardApiParams, { [API.PARAM_PAGE] : nextPage });
     setCardApiParams(newApiCall);
     setCurrentPage(nextPage);
-    console.log(`currentPage: ${currentPage} - newApiCall: `, JSON.parse(JSON.stringify(newApiCall)));
   };
 
 
   const handleFilterSubmit = (builtForm = {}) => {
-    console.group('%chandleFilterSubmit', 'background-color: red; color: white; font-weight: bold;');
-    console.log(builtForm);
-    console.groupEnd();
     setCardData([]);
     setCurrentPage(1);
     setCardApiParams(Object.assign({}, builtForm, { [API.PARAM_PAGE] : 1 }));
@@ -43,7 +38,6 @@ function App() {
     setCardDataLoading(true);
     const cardPromise = fetchCards(cardApiParams);
     cardPromise.then( cardResponse => {
-      console.log('baaack', cardResponse);
       setCardDataLoading(false);
       setCardError(cardResponse?.error);
       setCardData((c) => [...c, ...cardResponse?.cards]);

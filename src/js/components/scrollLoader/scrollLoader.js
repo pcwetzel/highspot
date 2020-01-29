@@ -12,18 +12,16 @@ const ScrollLoader = (props) => {
 
   const bottomOfPageObserver = new IntersectionObserver(entries => {
     const loadMoreEntry = entries.filter(entry => entry.target === scrollElement.current)?.[0];
-    console.log(`is Intersecting: ${loadMoreEntry?.isIntersecting} - cardDataLoading: ${cardDataLoading}`, loadMoreEntry);
     if (loadMoreEntry?.isIntersecting && !cardDataLoading) {
       loadNextPage();
     }
   }, observerOptions);
 
   useEffect(() => {
-    console.log('in ScrollLoader useEffect');
     const scrollElementDOM = scrollElement.current;
     bottomOfPageObserver.observe(scrollElementDOM);
 
-    return () => { console.log('done'); return bottomOfPageObserver.unobserve(scrollElementDOM); };
+    return () => { return bottomOfPageObserver.unobserve(scrollElementDOM); };
   });
 
   return (<section ref={scrollElement}>

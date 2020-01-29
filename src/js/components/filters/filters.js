@@ -2,55 +2,12 @@ import React, { useRef, useState, useEffect } from 'react';
 import './filters.scss';
 import { fetchFilters } from "../../utils/apiLoader";
 import PropTypes from "prop-types";
+import { lookupInputNames, nonLookupInputs, nonLookupCheckboxes } from '../../constants/form-input-constants';
 
 const capitalizeNoPlural = {
   regex: /^([a-z])(.+)s?$/i,
   replaceFunc: (m, p1, p2) => `${p1.toUpperCase()}${p2}`
 };
-
-// Some values that are received had different names when we try to filter.
-// Example: We get "types" via the Types API, but send "type"
-const lookupInputNames = {
-  sets: 'set.id',
-  subTypes: 'subtypes',
-  types: 'type'
-};
-
-const nonLookupInputs = [
-  {
-    name: 'name',
-    type: 'text'
-  },
-  {
-    name: 'rarity',
-    type: 'text'
-  },
-  {
-    name: 'cost',
-    type: 'number'
-  },
-  {
-    name: 'power',
-    type: 'number'
-  },
-  {
-    name: 'health',
-    type: 'number'
-  },
-  {
-    label: 'Rules',
-    name: 'text',
-    type: 'text'
-  }
-];
-
-const nonLookupCheckboxes = [
-  {
-    label: 'Unique Card',
-    name: 'unique',
-    type: 'checkbox'
-  }
-];
 
 
 const Filters = (props) => {
@@ -69,10 +26,7 @@ const Filters = (props) => {
   useEffect(() => {
     const allFiltersPromise = fetchFilters();
     allFiltersPromise.then( filterResponses => {
-      console.group('%cfilterResponses', 'color: yellow; background-color: green; font-weight: bold');
-      console.log(filterResponses);
       filterResponses.forEach(filterResponse => {
-        console.log(filterResponse);
         if (!filterResponse?.data || !Object.keys(filterResponse.data)) {
           return;
         }
@@ -80,47 +34,33 @@ const Filters = (props) => {
         filterResponse.data[filter].sort(filter === 'sets' ? setSort : undefined);
         switch (filter) {
           case 'attributes':
-            console.log('1) attributes:', filterResponse.data.attributes);
             setAttributeList(filterResponse.data.attributes.map(value => {
               return { name: value, value };
             }));
-            console.log('2) attributeList:', JSON.parse(JSON.stringify(attributeList)));
             break;
           case 'keywords':
-            console.log('1) keywords:', filterResponse.data.keywords);
             setKeywordsList(filterResponse.data.keywords.map(value => {
               return { name: value, value };
             }));
-            console.log('2) keywordsList:', keywordsList);
             break;
           case 'sets':
-            console.log('1) sets:', JSON.parse(JSON.stringify(filterResponse.data.sets)));
-            console.log('2) sets:', JSON.parse(JSON.stringify(filterResponse.data.sets)));
             setSetsList(filterResponse.data.sets.map(setObj => {
-              console.log(JSON.parse(JSON.stringify(setObj)));
               return { name: setObj.name, value: setObj.id };
             }));
-            console.log('3) ******* setsList:', setsList);
             break;
           case 'types':
-            console.log('1) types:', filterResponse.data.types);
             setTypesList(filterResponse.data.types.map(value => {
               return { name: value, value };
             }));
-            console.log('2) typesList:', typesList);
             break;
           case 'subtypes':
-            console.log('1) subTypes:', filterResponse.data.subtypes);
             setSubTypesList(filterResponse.data.subtypes.map(value => {
               return { name: value, value };
             }));
-            console.log('2) subTypesList:', subTypesList);
             break;
           default:
         }
       });
-      console.log('end of filters');
-      console.groupEnd();
     });
   }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -135,8 +75,6 @@ const Filters = (props) => {
   };
 
   const createSelectOptions = (filterName, filter) => {
-    console.log('here createSelectOptions ');
-    console.log(filterName, filter);
     return (<>
       <option />
       { filter.map(opt => {
@@ -191,10 +129,7 @@ const Filters = (props) => {
   const handleOnChange = (event) => {
     const inputTarget = event.target;
     const inputName = inputTarget?.name;
-    console.group('handleOnChange');
     if (!inputName) {
-      console.log('early exit');
-      console.groupEnd();
       return;
     }
     let value;
@@ -203,30 +138,17 @@ const Filters = (props) => {
     } else {
       value = inputTarget?.value.trim();
     }
-    console.log(`type: ${inputTarget.type}`);
-    console.log(`name: ${inputName}`);
-    console.log(`value: ${value}`);
     if (value) {
       setBuiltForm(Object.assign({}, builtForm, { [inputName] : value }));
     } else {
       // Disabling linter due to needing a throwaway variable to remov
       const { [inputName]: throwAwayVar, ...removeValueForm} = builtForm;    // eslint-disable-line no-unused-vars
-      console.log(`********** removeValueForm`, JSON.parse(JSON.stringify(removeValueForm)));
       setBuiltForm(removeValueForm);
     }
-    console.groupEnd();
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-/*    const builtForm = {};
-    Array.from(formRef.current.querySelectorAll('input[name], select[name]')).forEach(input => {
-      const isCheckbox = input.type === 'checkbox';
-      const trimmedValue = input?.value?.trim();
-      if (isCheckbox || trimmedValue) {
-        builtForm[input.getAttribute('name')] = isCheckbox ? input.checked : trimmedValue;
-      }
-    });*/
     filterSubmit(builtForm);
   };
 
