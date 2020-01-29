@@ -22,3 +22,12 @@ div.item {
   0% { transform: scaleX(0); }
   100% { transform: scaleX(1); }
 }
+
+
+
+
+Cost 1-20
+Power 1-12
+Health 1-12
+Soul Summon 50-1200
+Soul Trap 5-400 c
