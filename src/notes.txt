@@ -1,0 +1,24 @@
+
+div.container {
+  display: flex;
+  width: 500px;
+  height: 500px;
+  border: 1px solid yellow;
+  align-items: flex-end;
+}
+
+div.item {
+  height: 20px;
+  width: 120px;
+  background-color: lime;
+  transform-origin: bottom left;
+  animation-name: growGraph;
+  animation-duration: 1.3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
+}
+
+@keyframes growGraph {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
