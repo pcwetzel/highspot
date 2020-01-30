@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 
-import '.loadingIndicator.scss';
+import './loadingIndicator.scss';
 
 const LoadingIndicator = (props) => {
   const { showLoading } = props;
