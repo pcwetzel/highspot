@@ -7,6 +7,7 @@ import { fetchCards } from "./js/utils/apiLoader";
 import * as API from './js/constants/endpoint-constants';
 
 import './App.scss';
+import LoadingIndicator from './js/components/loadingIndicator';
 
 
 function App() {
@@ -58,7 +59,7 @@ function App() {
       <main data-testid='main'>
         { cardError && <ErrorMessage message={ cardError } /> }
         { cardData && <CardList cards={ cardData } /> }
-        { cardDataLoading && <div className="loading-indicator">Loading ...</div> }
+        <LoadingIndicator showLoading={ cardDataLoading }/>
         { hasMoreCards && <ScrollLoader cardDataLoading={ cardDataLoading } loadNextPage={ loadNextPage } /> }
       </main>
     </>
