@@ -1,19 +1,23 @@
-import React, { useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 const FilterButton = (props) => {
   const { handleFilterButtonClick } = props;
   let { filterVisibility } = props;
 
-  const filtersButton = useRef(null);
-
   const filterButtonClick = () => {
     filterVisibility = !filterVisibility;
     handleFilterButtonClick(filterVisibility);
   };
 
-  return (<button className={`cta ${filterVisibility && 'active'}`} ref={ filtersButton } onClick={ filterButtonClick }>
-    <div>Filters</div>
+  return (<button className={`cta ${filterVisibility && 'active'}`}
+                  id='filter-button'
+                  aria-expanded={ filterVisibility }
+                  aria-controls='filter-container'
+                  onClick={ filterButtonClick }
+          >
+    <div className='small-only'>Filters</div>
+    <div className='medium-and-bigger'>Filters</div>
   </button>);
 };
 

@@ -152,7 +152,8 @@ const Filters = (props) => {
     filterSubmit(builtForm);
   };
 
-  return (<aside className={`filter-container ${filterVisibilityToggle ? 'active' : ''}` }>
+  return (<aside className={`filter-container ${filterVisibilityToggle ? 'active' : ''}` }
+                 id='filter-container' aria-labelledby='filter-button'>
       <section>
         <h2>Filters Cards</h2>
         <form onSubmit={ submitHandler } ref={ formRef }>

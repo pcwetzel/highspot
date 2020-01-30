@@ -23,6 +23,20 @@ $LARGE_BREAKPOINT: 850;
 $media-query-medium: 'only screen and (min-width: #{$MEDIUM_BREAKPOINT}px)';
 $media-query-large: 'only screen and (min-width: #{$LARGE_BREAKPOINT}px)';
 
+.small-only {
+  @media #{$media-query-medium} {
+    display: none;
+  }
+}
+
+.medium-and-bigger {
+  display: none;
+
+  @media #{$media-query-medium} {
+    display: inherit;
+  }
+}
+
 /* ** Accessibility Definitions ** */
 
 .screen-reader-only {
