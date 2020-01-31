@@ -9,15 +9,15 @@
   transform: translateX(-100%);
   visibility: hidden;
   transition:
-      visibility 0s,
-      transform 0.5s ease-out 0.1s;
+    transform 0.5s ease-out,
+    visibility 0s 0.5s;
 
   &.active {
     visibility: visible;
     transform: translateX(0%);
     transition:
-        transform 0.5s ease-out,
-        visibility 0s 0.5s;
+      visibility 0s,
+      transform 0.5s ease-out 0.1s;
   }
 
   form {
