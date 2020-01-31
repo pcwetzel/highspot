@@ -4,7 +4,20 @@
   color: #FFF;
   font-family: $garamond-font;
   text-align: center;
-  font-size: 2rem;
+  font-size: 14px;
   margin: 1rem 0;
   white-space: nowrap;
+  overflow: hidden;
+
+  span.medium-and-bigger {
+    display: none;
+  }
+
+  @media #{$media-query-medium} {
+    font-size: 2rem;
+
+    span.medium-and-bigger {
+      display: inline;
+    }
+  }
 }

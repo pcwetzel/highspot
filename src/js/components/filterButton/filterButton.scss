@@ -1,0 +1,31 @@
+@import '../../../styles/styleguide';
+
+#filter-button {
+  @media #{$media-query-small} {
+    border: 0 none;
+
+    div {
+      border: 0 none;
+
+      &:focus, &:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  @media #{$media-query-medium} {
+    .small-only {
+      display: none;
+    }
+  }
+
+  .medium-and-bigger {
+    display: none;
+
+    @media #{$media-query-medium} {
+      display: inherit;
+    }
+  }
+}
+
+

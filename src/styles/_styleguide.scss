@@ -20,22 +20,9 @@ $high-contrast-offwhite: #F0F0F0;
 $MEDIUM_BREAKPOINT: 600;
 $LARGE_BREAKPOINT: 850;
 
+$media-query-small: 'only screen and (max-width: #{$MEDIUM_BREAKPOINT}px)';
 $media-query-medium: 'only screen and (min-width: #{$MEDIUM_BREAKPOINT}px)';
 $media-query-large: 'only screen and (min-width: #{$LARGE_BREAKPOINT}px)';
-
-.small-only {
-  @media #{$media-query-medium} {
-    display: none;
-  }
-}
-
-.medium-and-bigger {
-  display: none;
-
-  @media #{$media-query-medium} {
-    display: inherit;
-  }
-}
 
 /* ** Accessibility Definitions ** */
 
@@ -90,12 +77,17 @@ h1,h2,h3 {
 }
 
 h1 {
-  font-size: 1rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 1.1rem;
 
   @media #{$media-query-medium} {
-    font-size: 2.6rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 2.4vw;
+  }
+
+  @media #{$media-query-large} {
+    font-size: 2.4vw;
   }
 }
 
