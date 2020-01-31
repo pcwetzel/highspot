@@ -1,27 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useUID } from 'react-uid';
 
 import './filterButton.scss';
 
 const FilterButton = (props) => {
-  const { handleFilterButtonClick } = props;
-  let { filterVisibility } = props;
+  const { filterVisibility, handleFilterButtonClick } = props;
+  const uid = useUID();
+
+  let currentVisibility =  filterVisibility;
 
   const filterButtonClick = () => {
-    filterVisibility = !filterVisibility;
-    handleFilterButtonClick(filterVisibility);
+    currentVisibility = !currentVisibility;
+    handleFilterButtonClick(currentVisibility);
   };
 
   return (<>
-    <button className={`cta ${filterVisibility && 'active'}`}
+    <button className={`cta ${currentVisibility ? 'active' : ''}`}
                   id='filter-button'
-                  aria-expanded={ filterVisibility }
+                  aria-expanded={ currentVisibility }
                   aria-controls='filter-container'
                   onClick={ filterButtonClick }
           >
     <div className='small-only'>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 0 393 393.99303" width="25px" height="25px" aria-describedby='filters-svg'>
-        <title id='filters-svg'>Filters</title>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 0 393 393.99303" width="25px" height="25px" aria-describedby={`filters-svg-${uid}`} role='img'>
+        <title id={`filters-svg-${uid}`}>Filters</title>
         <path id='filter-svg-inner'
           d="m368.3125 10c2.5.015625 4.78125 1.4375 5.890625 3.675781 1.109375 2.242188.863281 4.914063-.640625 6.914063l-128.679688 181.28125c-5.949218 8.046875-9.171874 17.78125-9.199218 27.789062v120.011719c0 2.648437-1.308594 5.289063-3.929688 5.949219l-72.878906 27.789062c-2.019531.933594-4.371094.769532-6.238281-.4375-1.867188-1.210937-2.980469-3.289062-2.953125-5.511718v-147.800782c-.027344-10.007812-3.25-19.742187-9.199219-27.789062l-128.679687-181.28125c-1.503907-2-1.75-4.671875-.640626-6.914063 1.109376-2.238281 3.390626-3.660156 5.890626-3.675781zm0 0"
           fill="#000000"/>
