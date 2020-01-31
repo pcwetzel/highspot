@@ -12,8 +12,8 @@ $gold-dark: #D9A73D;
 $gold-light: #C5AC59;
 $charcoal-light: #636B6F;
 $charcoal: #574F49;
-$light-khaki: #B4A679B3;
-$dark-khaki: #242424;
+$khaki-light: #B4A679B3;
+$khaki-dark: #242424;
 $high-contrast-offwhite: #F0F0F0;
 
 /* ** Media Breakpoints Definitions ** */
@@ -54,7 +54,7 @@ button.cta, a.cta, .cta {
   cursor: pointer;
 
   span, div {
-    border: 1px solid rgba($light-khaki, .7);
+    border: 1px solid rgba($khaki-light, .7);
     padding: .1rem .8rem;
     display: block;
   }

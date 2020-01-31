@@ -9,6 +9,10 @@
 
       &:focus, &:hover {
         background: transparent;
+
+        svg path#filter-svg-inner {
+          fill: $gold-dark;
+        }
       }
     }
   }
