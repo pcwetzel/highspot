@@ -49,7 +49,7 @@ function App() {
   }, [cardApiParams]);
 
   const paintFilters = !cardError;
-  const showTotalCards = !cardError && !cardDataLoading;
+  const showTotalCards = !cardError && (!cardDataLoading || currentPage > 1);
 
   return (<>
       <Header totalCards={ totalCards }
