@@ -1,25 +1,75 @@
-import React from 'react';
-import './card.scss';
+import React, { useState } from 'react';
+import { useUID } from 'react-uid';
 import PropTypes from 'prop-types';
 import Checkmark from './checkmark';
 import * as VALUES from '../../constants/value-constants';
 
-const Card = (props) => {
-  const { imageUrl, name, text, set, subtypes, type, rarity, cost, power, health, 
-    soulSummon, soulTrap, attributes, collectible, unique } = props;
+import './card.scss';
 
+const Card = (props) => {
+  const { imageUrl, name, text, set, subtypes, type, rarity, cost, power, health,
+    soulSummon, soulTrap, attributes, collectible, unique } = props;
+  const graphTypes = { cost, power, health };
   const graphSize = {};
-  Object.keys(VALUES).forEach(graph => {
-    console.log(graph);
-    graphSize[graph] = [graph] && VALUES[graph]?.max && Math.round(100 * [graph] / VALUES[graph].max);
-    console.log(`${[graph]} && ${VALUES[graph]?.max} && Math.round(100 * ${[graph]} / ${VALUES[graph].max})`);
+
+  const [isCardBack, setIsCardBack] = useState(false);
+  const uid = useUID();
+
+  const buttonId = `card-button-${uid}`;
+  const toggleLayerId = `card-layer-${uid}`;
+
+  Object.keys(graphTypes).forEach(type => {
+    const maxValue = VALUES?.[type.toUpperCase()]?.max;
+    if (maxValue && graphTypes[type]) {
+      graphSize[type] = maxValue  && Math.round(100 * graphTypes[type] / maxValue);
+    }
   });
-  console.log(graphSize);
+
+  const toggleCard = (e) => {
+    e.preventDefault();
+    setIsCardBack(!isCardBack);
+  };
+
+  const paintGraphRow = (category = null) => {
+    const key = Object.keys(category)?.[0];
+    if (!category || !key || isNaN(category[key])) {
+      return null;
+    }
+    return (<>
+      <dt>{ key.replace(/\b\w+/g, (w) => `${w.charAt(0).toUpperCase()}${w.slice(1).toLowerCase()}`) }: </dt>
+      <dd>
+        <div className={`graph ${key}`} data-graph-size={graphSize[key]} />
+        { category[key] }
+        { VALUES?.[key.toUpperCase()]?.max && <span className='maximum'>(Max: {VALUES[key.toUpperCase()].max})</span> }
+      </dd>
+      </>);
+
+  };
+
   return (
-    <section className='card'>
-      { name && <h3>{ name }</h3> }
-      <div className='card-front'>
-        { imageUrl && <div className='image'><img src={ imageUrl } alt='' /></div>}
+    <section className={`card ${isCardBack ? 'flipped' : ''}`}>
+      <div className="cardContainer">
+        { name && <h3>{ name }</h3> }
+        <div className='card-flip-outer'>
+          <div className="card-flip-inner" id={ toggleLayerId } aria-labelledby={ buttonId }>
+            <div className='card-front'>
+              { imageUrl && <div className='image'><img src={ imageUrl } alt='' /></div>}
+            </div>
+            <div className='card-back'>
+              <dl>
+                { paintGraphRow({ cost }) }
+                { paintGraphRow({ power }) }
+                { paintGraphRow({ health }) }
+                { soulSummon && <><dt>Soul Summon:</dt><dd>{ soulSummon.toLocaleString() }</dd></> }
+                { soulTrap && <><dt>Soul Trap:</dt><dd>{ soulTrap.toLocaleString() }</dd></> }
+                { attributes && <><dt>Attributes:</dt><dd>{ attributes }</dd></> }
+
+                <dt>Collectible:</dt><dd><Checkmark checked={collectible} title={collectible ? 'yes' : 'no'} /></dd>
+                <dt>Unique:</dt><dd><Checkmark checked={unique} title={unique ? 'yes' : 'no'} /></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
         <dl>
           { set?.name && <><dt>Set Name:</dt><dd>{ set.name }</dd></> }
           { type && <><dt>Type:</dt><dd>{ type }</dd></> }
@@ -28,26 +78,13 @@ const Card = (props) => {
           { text && <><dt>Text:</dt><dd>{ text }</dd></> }
         </dl>
       </div>
-      <div className='card-back'>
-        <dl>
-          { cost && <><dt>Cost:</dt><dd>
-            { graphSize?.['cost'] && <div className='graph cost' data-graph-size={graphSize[cost]} /> }
-            <div>{ cost }</div></dd></> }
-          { power && <><dt>Power:</dt><dd>
-            { graphSize?.['power'] && <div className='graph power' data-graph-size={graphSize[power]} /> }
-            <div>{ power }</div></dd></> }
-          { health && <><dt>Health:</dt><dd>
-            { graphSize?.['health'] && <div className='graph health' data-graph-size={graphSize[health]} /> }
-            <div>{ health }</div></dd></> }
-          { soulSummon && <><dt>Soul Summon:</dt><dd>{ soulSummon.toLocaleString() }</dd></> }
-          { soulTrap && <><dt>Soul Trap:</dt><dd>{ soulTrap.toLocaleString() }</dd></> }
-          { attributes && <><dt>Attributes:</dt><dd>{ attributes }</dd></> }
-          <dt>Collectible:</dt><dd><Checkmark checked={collectible} title={collectible ? 'yes' : 'no'} /></dd>
-          <dt>Unique:</dt><dd><Checkmark checked={unique} title={unique ? 'yes' : 'no'} /></dd>
-        </dl>
-      </div>
-      <button className='cta'>
-        <div>More Details</div>
+      <button className='cta'
+              id={ buttonId }
+              aria-controls={ toggleLayerId }
+              aria-expanded={ isCardBack }
+              onClick={(event) => { toggleCard(event); }}
+            >
+        <div>{ isCardBack ? 'Less' : 'More' } Details</div>
       </button>
     </section>
   );

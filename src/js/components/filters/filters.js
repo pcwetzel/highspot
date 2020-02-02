@@ -169,14 +169,6 @@ const Filters = (props) => {
             <button className='cta'><div>Filter</div></button>
           </div>
         </form>
-        <fieldset>
-          <legend>builtForm</legend>
-          { Object.keys(builtForm).map(k => {
-            return (<div key={`o-${k}`}>
-              <b>{k}:</b> {builtForm[k]}
-            </div>);
-          })}
-        </fieldset>
       </section>
     </aside>
   );
