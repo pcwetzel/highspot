@@ -49,7 +49,7 @@ const FilterButton = (props) => {
                   aria-controls='filter-container'
                   onClick={ filterButtonClick }
           >
-    <div className='small-only'>
+    <div className='small-only' aria-label='Toggle Filters'>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 0 393 393.99303" width="25px" height="25px" aria-describedby={`filters-svg-${uid}`} role='img'>
         <title id={`filters-svg-${uid}`}>Filters</title>
         <path id='filter-svg-inner'
