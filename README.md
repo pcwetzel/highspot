@@ -20,7 +20,6 @@ Implement a solution that meets the following criteria:
 ### API to use
  Documentation: [https://docs.elderscrollslegends.io/](https://docs.elderscrollslegends.io/)
 
-
 Example of the get all cards API with the 20 cards per page request:
 [https://api.elderscrollslegends.io/v1/cards?pageSize=20](https://api.elderscrollslegends.io/v1/cards?pageSize=20)
 
@@ -61,10 +60,8 @@ To run eslint:
 yarn lint
 ```
 
-### Concerns I came across along the way
+### Notes that I came across along the way
 1. **Lack of Sort/Order filter in the API** - The problem description asks that to be sorted by name and also only retrieve 20 cards at a time.  Without the guarantee that the cards are presorted by name, each page request could contain cards that would be sorted into previously displayed page.  This creates an odd UX as a new card may not be visible or noticeable to the user due to it being sorted in between previously painted cards. The other option would be to sort per page, but that would give an odd experience as well as the user would be seeing new sets of A-Z cards per each 20 cards.<br /><br />
-1. **Inconsistent Image Sizes** - I noticed all the card image sizes aren't necessarily equal (ex. 404 x 669, 404 x 655, 365 x 604, 404 x 655, etc.). While this isn't a big deal necessarily, I think the asthetic for the cards would be that you want all the cards to be uniform sized.  My solution was to go with the smallest image size 365 x 604 as I feared stretching might degrade the quality of the image.<br /><br />
-This caused an additional concern of hardcoding a "smallest size" because I believe that leaves open a future potential issue of "what if we get even a smaller size than that?".  One solution I originally tried was to dynamically calculate the sizes as I loaded them and use the smallest I came up with. The problem with this solution is that they card size could fluctuate as we brought in new pages. ex. what if the smallest image size was on page 3. That would make all the previous pages weirdly shrink<br /><br />
 
 ## Todo List
 
