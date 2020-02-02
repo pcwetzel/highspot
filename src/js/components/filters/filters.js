@@ -62,7 +62,7 @@ const Filters = (props) => {
         }
       });
     });
-  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const setSort = (a, b) => {
     if (a?.name?.toLowerCase() < b?.name?.toLowerCase()) {
