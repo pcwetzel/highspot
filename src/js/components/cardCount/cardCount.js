@@ -8,8 +8,8 @@ const CardCount = (props) => {
 
   return (
     <section className='card-total'>
-      <span className='small-only'>{ totalCards.toLocaleString() } { totalCards === 1 ? 'card' : 'cards' } found</span>
-      <span className='medium-and-bigger'>{ totalCards.toLocaleString() } { totalCards === 1 ? 'card' : 'cards' }</span>
+      <span className='small-only'>{ totalCards.toLocaleString() } { totalCards === 1 ? 'card' : 'cards' }</span>
+      <span className='medium-and-bigger'>{ totalCards.toLocaleString() } { totalCards === 1 ? 'card' : 'cards' } found</span>
     </section>
   );
 };
