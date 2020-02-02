@@ -1,4 +1,11 @@
 .loading-indicator {
-  display: inline-block;
-  margin: 2rem auto;
+  display: flex;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    margin-left: 1vw;
+  }
 }
