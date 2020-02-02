@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import './header.scss';
 import CardCount from "../cardCount";
@@ -9,10 +9,10 @@ import FilterButton from "../filterButton";
 const Header = (props) => {
   const { totalCards, showTotalCards, paintFilters, handleFilterSubmit } = props;
 
-
   const [filterVisibilityToggle, setFilterVisibilityToggle] = useState(false);
+  const filtersRef = useRef(null);
 
-  const handleFilterButtonClick = (newFilterVisibility) => {
+  const handleFilterToggle= (newFilterVisibility) => {
     setFilterVisibilityToggle(newFilterVisibility);
   };
 
@@ -22,7 +22,8 @@ const Header = (props) => {
         <div>
           { paintFilters && <FilterButton
               filterVisibility={ filterVisibilityToggle }
-              handleFilterButtonClick={ handleFilterButtonClick } />
+              handleFilterToggle={ handleFilterToggle }
+              filtersRef={filtersRef} />
           }
         </div>
         <div>
@@ -32,7 +33,9 @@ const Header = (props) => {
           { showTotalCards && <CardCount totalCards={ totalCards }/> }
         </div>
       </header>
-      { paintFilters && <Filters filterSubmit={ handleFilterSubmit } filterVisibilityToggle={ filterVisibilityToggle }/> }
+      { paintFilters && <Filters filterSubmit={ handleFilterSubmit }
+                                 filterVisibilityToggle={ filterVisibilityToggle }
+                                 filtersRef={ filtersRef } /> }
     </div>
   );
 };

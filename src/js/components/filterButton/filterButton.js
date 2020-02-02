@@ -1,23 +1,50 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useUID } from 'react-uid';
 
 import './filterButton.scss';
 
 const FilterButton = (props) => {
-  const { filterVisibility, handleFilterButtonClick } = props;
+  const { filterVisibility, handleFilterToggle, filtersRef } = props;
   const uid = useUID();
 
   let currentVisibility =  filterVisibility;
 
+  const buttonRef = useRef(null);
+
   const filterButtonClick = () => {
     currentVisibility = !currentVisibility;
-    handleFilterButtonClick(currentVisibility);
+    handleFilterToggle(currentVisibility);
   };
+
+  const bodyClickClose = (e) => {
+    let isClickPartOfFilters = false;
+    let node = e.target;
+    if (!currentVisibility) {
+      return;
+    }
+
+    while (!isClickPartOfFilters  && node !== document.body) {
+      if ((node === filtersRef.current) || (node === buttonRef.current)){
+        isClickPartOfFilters  = true;
+      } else {
+        node = node.parentNode;
+      }
+    }
+    if (!isClickPartOfFilters ) {
+      handleFilterToggle(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', bodyClickClose);
+    return () => { document.removeEventListener('click', bodyClickClose); };
+  });
 
   return (<>
     <button className={`cta ${currentVisibility ? 'active' : ''}`}
                   id='filter-button'
+                  ref={ buttonRef }
                   aria-expanded={ currentVisibility }
                   aria-controls='filter-container'
                   onClick={ filterButtonClick }
@@ -40,7 +67,8 @@ const FilterButton = (props) => {
 
 FilterButton.propTypes = {
   filterVisibility: PropTypes.bool.isRequired,
-  handleFilterButtonClick: PropTypes.func.isRequired
+  handleFilterToggle: PropTypes.func.isRequired,
+  filtersRef: PropTypes.object.isRequired
 };
 
 export default FilterButton;

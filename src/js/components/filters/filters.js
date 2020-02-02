@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './filters.scss';
 import { fetchFilters } from "../../utils/apiLoader";
 import PropTypes from "prop-types";
@@ -12,9 +12,7 @@ const capitalizeNoPlural = {
 
 const Filters = (props) => {
 
-  const { filterSubmit, filterVisibilityToggle } = props;
-
-  const formRef = useRef(null);
+  const { filterSubmit, filterVisibilityToggle, filtersRef } = props;
 
   const [attributeList, setAttributeList] = useState([]);
   const [keywordsList, setKeywordsList] = useState([]);
@@ -141,7 +139,7 @@ const Filters = (props) => {
     if (value) {
       setBuiltForm(Object.assign({}, builtForm, { [inputName] : value }));
     } else {
-      // Disabling linter due to needing a throwaway variable to remov
+      // Disabling linter due to needing a throwaway variable to remove
       const { [inputName]: throwAwayVar, ...removeValueForm} = builtForm;    // eslint-disable-line no-unused-vars
       setBuiltForm(removeValueForm);
     }
@@ -152,11 +150,13 @@ const Filters = (props) => {
     filterSubmit(builtForm);
   };
 
-  return (<aside className={`filter-container ${filterVisibilityToggle ? 'active' : ''}` }
-                 id='filter-container' aria-labelledby='filter-button'>
+  return (<aside ref={ filtersRef }
+                 className={`filter-container ${filterVisibilityToggle ? 'active' : ''}` }
+                 id='filter-container'
+                 aria-labelledby='filter-button'>
       <section>
         <h2>Filters Cards</h2>
-        <form onSubmit={ submitHandler } ref={ formRef }>
+        <form onSubmit={ submitHandler }>
           { createNonLookupElements(nonLookupInputs, ':') }
           { createLookupInputs('attributes', attributeList) }
           { createLookupInputs('keywords', keywordsList) }
@@ -176,7 +176,8 @@ const Filters = (props) => {
 
 Filters.propTypes = {
   filterSubmit: PropTypes.func.isRequired,
-  filterVisibilityToggle: PropTypes.bool.isRequired
+  filterVisibilityToggle: PropTypes.bool.isRequired,
+  filtersRef: PropTypes.object.isRequired
 };
 
 export default Filters;
