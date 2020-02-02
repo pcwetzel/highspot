@@ -7,7 +7,9 @@ const CardCount = (props) => {
   const { totalCards } = props;
 
   return (
-    <section className='card-total'>{ totalCards.toLocaleString() } { totalCards === 1 ? 'card' : 'cards' }<span className='medium-and-bigger'>  found</span>
+    <section className='card-total'>
+      <span className='small-only'>{ totalCards.toLocaleString() } { totalCards === 1 ? 'card' : 'cards' } found</span>
+      <span className='medium-and-bigger'>{ totalCards.toLocaleString() } { totalCards === 1 ? 'card' : 'cards' }</span>
     </section>
   );
 };

@@ -11,8 +11,8 @@ test('renders header title', () => {
 });
 
 test('renders the card count properly inside the header', () => {
-  const { getByText } = render(<Header totalCards={10} showTotalCards={true} paintFilters={false} handleFilterSubmit={testFunc} />);
-  const cardCountElement = getByText(/10 Cards Found/i);
+  const { getByText } = render(<Header totalCards={1} showTotalCards={true} paintFilters={false} handleFilterSubmit={testFunc} />);
+  const cardCountElement = getByText(/1 Card Found/i);
   expect(cardCountElement).toBeInTheDocument();
 });
 
