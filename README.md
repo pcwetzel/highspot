@@ -60,10 +60,25 @@ To run eslint:
 yarn lint
 ```
 
+### Some Features to take note of
+1. **Filters** - Added the ability to filter down which cards to display
+1. **Filter Lookups** - Once I saw there were other services that could be used as lookups, I added them to the filters to make them select boxes
+1. **Filter Lookup Fallback** - If the filter lookup XHR requests fails, it fails gracefully to be input textboxes instead of select dropdowns to still allow search functionality
+1. **Good Scores on Accessibility, Best Practices, and SEO** - Used the WAI Wave tool for accessibility testing and the Google Lighthouse tool to develop and audit.
+
+![Google Lighthouse Audit](public/graphics/lighthouse-audit-02-02-2020.png)
+
+![WCAG 2.1 Audit via Wave Tool](public/graphics/WAI-Wave-Audit-02-02-2020.png)
+
+
 ### Notes that I came across along the way
 1. **Lack of Sort/Order filter in the API** - The problem description asks that to be sorted by name and also only retrieve 20 cards at a time.  Without the guarantee that the cards are presorted by name, each page request could contain cards that would be sorted into previously displayed page.  This creates an odd UX as a new card may not be visible or noticeable to the user due to it being sorted in between previously painted cards. The other option would be to sort per page, but that would give an odd experience as well as the user would be seeing new sets of A-Z cards per each 20 cards.<br /><br />
 
 ## Todo List
-
+- [ ] Improve code coverage and include more indepth tests
+- [ ] Add a Service Worker and other Progressive Web App enhancements
+- [ ] Improve UX on filters that are a range. (Possible solution: Use a slider control for filters that are ranges (ex. cost))
+- [ ] Add styling as card images come in
+- [ ] Keep DOM light by only rendering cards as you get closer to having them being in the viewport
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
