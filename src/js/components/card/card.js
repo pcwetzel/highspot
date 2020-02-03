@@ -49,7 +49,7 @@ const Card = (props) => {
   return (
     <section className={`card ${isCardBack ? 'flipped' : ''}`}>
       <div className="cardContainer">
-        { name && <h3>{ name }</h3> }
+        { name && <h3 data-testid='card-name'>{ name }</h3> }
         <div className='card-flip-outer'>
           <div className="card-flip-inner" id={ toggleLayerId } aria-labelledby={ buttonId }>
             <div className='card-front'>
