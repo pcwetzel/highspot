@@ -64,8 +64,8 @@ const Card = (props) => {
                 { soulTrap && <><dt>Soul Trap:</dt><dd>{ soulTrap.toLocaleString() }</dd></> }
                 { attributes && <><dt>Attributes:</dt><dd>{ attributes }</dd></> }
 
-                <dt>Collectible:</dt><dd><Checkmark checked={collectible} title={collectible ? 'yes' : 'no'} /></dd>
-                <dt>Unique:</dt><dd><Checkmark checked={unique} title={unique ? 'yes' : 'no'} /></dd>
+                <dt>Collectible:</dt><dd><Checkmark checked={collectible} title='collectable' /></dd>
+                <dt>Unique:</dt><dd><Checkmark checked={unique} title='unique' /></dd>
               </dl>
             </div>
           </div>
