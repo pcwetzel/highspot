@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Checkmark from "./index";
+import Checkmark from "./checkmark";
 
 const GENERIC_TITLE = 'Some Title';
 const NON_CHECKED_TEXT = '-';
