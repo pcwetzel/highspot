@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './filters.scss';
 import { fetchFilters } from "../../utils/apiLoader";
-import PropTypes from "prop-types";
 import { lookupInputNames, nonLookupInputs, nonLookupCheckboxes } from '../../constants/form-input-constants';
+import * as API from '../../constants/endpoint-constants';
+import PropTypes from "prop-types";
 
 const capitalizeNoPlural = {
   regex: /^([a-z])(.+)s?$/i,
@@ -26,6 +27,26 @@ const Filters = (props) => {
     allFiltersPromise.then( filterResponses => {
       filterResponses.forEach(filterResponse => {
         if (!filterResponse?.data || !Object.keys(filterResponse.data)) {
+          if (filterResponse?.error && filterResponse?.url) {
+            switch (filterResponse?.url) {
+              case API.FILTER_ATTRIBUTES:
+                setAttributeList([{error: filterResponse.error}]);
+                break;
+              case API.FILTER_KEYWORDS:
+                setKeywordsList([{error: filterResponse.error}]);
+                break;
+              case API.FILTER_SETS:
+                setSetsList([{error: filterResponse.error}]);
+                break;
+              case API.FILTER_TYPES:
+                setTypesList([{error: filterResponse.error}]);
+                break;
+              case API.FILTER_SUBTYPES:
+                setSubTypesList([{error: filterResponse.error}]);
+                break;
+              default:
+            }
+          }
           return;
         }
         const filter = Object.keys(filterResponse.data).filter(key => !/^_/.test(key))?.[0];
@@ -89,7 +110,12 @@ const Filters = (props) => {
     </label>);
 
     const inputName = lookupInputNames?.[filterName] || filterName;
-    if (filter?.length) {
+    if (filter?.[0]?.error) {
+      return (<>
+        { createNonLookupElements([{ name: filterName, type: 'text'}], ':') }
+        <div className='filter-error'>Unable to lookup {filterName}</div>
+        </>);
+    } else if (filter?.length) {
       return (<div className='select-line'>
         { label }
         <div>

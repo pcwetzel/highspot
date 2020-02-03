@@ -7,7 +7,7 @@ const baseReturn = {
 
 function fetchUrl(url, prop = null) {
 
-  const getData = fetch(url)
+  return fetch(url)
     .then(response => {
       if (!response || response?.status !== 200) {
         return Promise.reject({ message: `Unable to load API. HTTP Status Code ${response?.status}` });
@@ -26,9 +26,8 @@ function fetchUrl(url, prop = null) {
     })
     .catch(reason => {
       const errorReason = reason?.message || 'Unknown reason';
-      return Object.assign({}, baseReturn, { error: errorReason });
+      return Object.assign({}, baseReturn, { error: errorReason, url });
     });
-  return getData;
 }
 
 const buildQueryString = (params = null) => {
