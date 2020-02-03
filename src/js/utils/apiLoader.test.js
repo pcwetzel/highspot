@@ -26,6 +26,5 @@ describe('API Testing', function () {
     expect(filtersObj.length).toBe(5);
     expect(filtersObj.filter(filter => filter.loading).length).toBe(0);
     expect(filtersObj.filter(filter => filter.error).length).toBe(0);
-    console.log(filtersObj.filter(filter => filter.error));
   });
 });
